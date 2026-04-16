@@ -178,4 +178,14 @@ def generates(self, idx, max_new_tokens):
 model = GPTlanguageModel()
 m = model.to(device)
 # print the numbers of parameters in the model
-print(sum(p.numel() for p in m.parameters))
+print(sum(p.numel() for p in m.parameters())/1e6, 'M parameters')
+
+# Create a PyTorch optimizer
+optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
+
+for iter in range(max_iters):
+
+    # every once in a while evaluate the loss on train and val sets
+    if iter % eval_interval == 0 or iter == max_iters - 1:
+        losses = estimate-lose()
+        
